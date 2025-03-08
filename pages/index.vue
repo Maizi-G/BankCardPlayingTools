@@ -39,7 +39,11 @@ const listItem = [
     {
         title: '加入 QQ 群',
         goto: 'https://qm.qq.com/q/IxE1bcVKAY'
-    }
+    },
+    {
+        title: 'Give us a star',
+        goto: 'https://github.com/HeyCrab3/BankCardPlayingTools'
+    },
 ]
 
 const go = (url: string) => {

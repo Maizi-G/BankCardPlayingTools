@@ -1,12 +1,12 @@
 <template>
-    <div class="w-full h-full align-middle justify-center text-center">
-        <div class="relative top-16 border-1 border-solid border-gray-200 rounded-lg p-4 w-1/3 m-auto text-center">
+    <div class="w-full h-full align-middle justify-center text-center @container">
+        <div class="@lg:relative @lg:top-16 @lg:border-1 @lg:border-solid @lg:border-gray-200 rounded-lg @lg:p-4 @lg:w-1/3 @lg:m-auto text-center">
             <a-page-header class="m-auto" title="卡 BIN 检测器" subtitle="不保证准确度。" @back="$router.back()" />
-            <p class="text-gray-500">在下方输入六位数的卡BIN</p>
+            <p class="text-gray-500 mt-2">在下方输入六位数的卡BIN</p>
             <a-verification-code size="large" v-model="value" style="width: 300px" @finish="onFinish" class="m-auto mt-6" />
             <a-empty v-if="!binData.valid"/>
             <template v-else>
-                <a-card title="检测结果" class="m-auto text-center mt-2">
+                <a-card title="检测结果" class="m-auto text-center mt-6">
                     <a-list>
                         <a-list-item>
                             <a-list-item-meta title="卡类型"></a-list-item-meta><template #extra>{{ getCardType(binData.type) }}</template>

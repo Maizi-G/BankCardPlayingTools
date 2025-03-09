@@ -1,12 +1,13 @@
 <template>
-    <div class="align-middle justify-center text-center">
-        <a-page-header class="w-1/3 fixed bg-white/50 border-b-1 border-gray-200 border-solid w-full z-1000 blue backdrop-blur-md" title="外汇牌价比较" subtitle="银行和卡组织之间的汇率比较" @back="$router.back()" />
+    <div class="align-middle justify-center text-center" id="container">
+        <a-page-header class="fixed bg-white/50 border-b-1 border-gray-200 border-solid w-full z-1000 blue backdrop-blur-md" title="外汇牌价比较" subtitle="银行和卡组织之间的汇率比较" @back="$router.back()" />
         <div class="m-auto text-center p-4 relative top-12">
-            <a-alert>由于部分银行已经不再区分钞汇户标识，所以这里只会展示现汇买入卖出价（也就是我们外币转账时用的）</a-alert>
+            <a-alert class="max-w-full">由于部分银行已经不再区分钞汇户标识，所以这里只会展示现汇买入卖出价（也就是我们外币转账时用的）</a-alert>
             <a-form-item label="选择银行" class="mt-2">
                 <a-select @change="getCurrency" :style="{ width: '320px' }" placeholder="请选择" v-model="value">
                     <a-option v-for="bank in bankList" :value="bank.code">{{ bank.name }}</a-option>
                 </a-select>
+                <ClientOnly><CurrencyConverter v-if="!loading" :exchange_rate="curData"/></ClientOnly>
             </a-form-item>
             <a-form-item label="更新时间"><span class="mr-2">{{ curData.time ? `${curData.day} ${curData.time}` : '正在获取中...'
                     }}</span><a-button :loading="loading" class="inline-block ml-2" @click="getCurrency"
@@ -24,7 +25,7 @@
                 </a-collapse-item>
             </a-collapse>
             <a-skeleton animation v-if="loading"><a-skeleton-line :rows="12" /></a-skeleton>
-            <a-card v-else>
+            <a-card v-else class="p-0">
                 <a-list>
                     <a-list-item v-for="item in curData.codeList" :key="item.code">
                         <a-list-item-meta :title="item.name || '未知货币（API未返回）'"></a-list-item-meta>
@@ -48,6 +49,7 @@
                 </a-list>
             </a-card>
         </div>
+        <a-back-top target-container="#container" :style="{position:'absolute'}" />
     </div>
 </template>
 
@@ -55,18 +57,18 @@
 useHead({ title: '外汇牌价比较' })
 
 const value = ref('ICBC')
-const curData = ref<any>({})
+const curData = ref<any>({ codeList: [] })
 const loading = ref(true)
 
 const showMidPrice = ref(false)
 const showPriceLoss = ref(true)
 
 const processNumber = (num: string) => {
-    return num ? parseFloat(num).toFixed(2) : 0
+    return num ? Number(parseFloat(num).toFixed(2)) : 0
 }
 
 const processFixed = (num: Number) => {
-    return num.toFixed(2)
+    return Number(num.toFixed(2))
 }
 
 // 银行列表

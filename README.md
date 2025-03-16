@@ -70,7 +70,7 @@ yarn dev
 # bun
 bun run dev
 ```
-服务器默认运行在 **http://localhost:5000**。
+服务器默认运行在 **http://localhost:5000**
 
 ---
 

@@ -14,7 +14,8 @@
                     <a-link @click="go(item.goto)">进入<icon-right /></a-link>
                 </div>
             </a-card>
-            <p class="text-neutral-500">Powered By Nuxt | ©2025 Crab Studio. All Rights Reserved.</p>
+            <p class="text-neutral-500">Powered By Nuxt | ©2025 Crab Studio & Maizi Org. All Rights Reserved.</p>
+            <p class="text-neutral-500">Built By Maizi Org.</p>
         </div>
     </div>
 </template>
